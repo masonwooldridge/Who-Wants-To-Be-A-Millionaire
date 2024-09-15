@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who Wants to Be a Millionaire</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+     
+    <div class="container">
+        <main>
+            <header>
+                <h1>Who Wants to Be a Millionaire</h1>
+                <p id="text"></p>
+            </header>
+            <div id="question-section">
+                <p id="question">Here will be the question...</p>
+                <div id="answers">
+                    <button class="answer" id="answer1">Start</button>
+                    <button class="answer" id="answer2">Settings</button>
+                    <button class="answer" id="answer3">Details</button>
+                    <button class="answer" id="answer4">About</button>
+                </div>
+            </div>
+            <div id="lifelines">
+                <button class="lifeline" id="lifeline-5050">50:50</button>
+                <button class="lifeline" id="lifeline-phone">Phone a Friend</button>
+                <button class="lifeline" id="lifeline-audience">Ask the Audience</button>
+            </div>
+        </main>
+
+        <div id="money-ladder">
+            <div class="money" id="value1">$100</div>
+            <div class="money" id="value2">$200</div>
+            <div class="money" id="value3">$300</div>
+            <div class="money" id="value4">$500</div>
+            <div class="money" id="value5">$1,000</div>
+            <div class="money" id="value6">$2,000</div>
+            <div class="money" id="value7">$4,000</div>
+            <div class="money" id="value8">$8,000</div>
+            <div class="money" id="value9">$16,000</div>
+            <div class="money" id="value10">$32,000</div>
+            <div class="money" id="value11">$64,000</div>
+            <div class="money" id="value12">$125,000</div>
+            <div class="money" id="value13">$250,000</div>
+            <div class="money" id="value14">$500,000</div>
+            <div class="money" id="value15">$1,000,000</div>
+        </div>
+    
+        <div class="popup" id="settings">
+            <div class="popup-content">
+                <h2>Settings</h2>
+                <p class="popup-p">No settings yet</p>
+                <button id="closeSettingsButton" class="closePopupButton">Close</button>
+            </div>
+        </div>
+
+        <div class="popup" id="details">
+            <div class="popup-content">
+                <h2>Details</h2>
+                <p class="popup-p">Coded using HTML, CSS, and JavaScript.</p>
+                <button id="closeDetailsButton" class="closePopupButton">Close</button>
+            </div>
+        </div>
+
+        <div class="popup" id="about">
+            <div class="popup-content">
+                <h2>About</h2>
+                <p class="popup-p">My name is Mason Wooldridge. I am a student at the University of Kentucky studying Computer Science, Math, and Mathematical Economics. I made this website to display my coding skills and to have a little fun. Hope you enjoy!</p>
+                <button id="closeAboutButton" class="closePopupButton">Close</button>
+            </div>
+        </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
