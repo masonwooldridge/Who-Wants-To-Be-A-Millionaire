@@ -25,6 +25,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeAboutButton = document.getElementById("closeAboutButton");
     const about = document.getElementById("about");
     about.style.visibility = 'hidden';
+    const genericButton = document.getElementById("generic-questions-button");
+    const mathButton = document.getElementById("math-questions-button");
+    let genericOn = true;
+    genericButton.classList.add("on");
+    let mathOn = false;
+    let questionOptionsCnt = 1;
     
     function shuffleQuestions(questions) {
         return questions.sort(() => Math.random() - 0.5);
@@ -58,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function startScreen() {
         resetMoneyLadder();
         resetOptions();
-        shuffledQuestions = shuffleQuestions(easyQuestions);
+        shuffledQuestions = shuffleQuestions(setQuestions(0));
         currentQuestion = 0;
         currentLevel = 0;
         moneyValues[0].classList.remove("active");
@@ -76,6 +82,45 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('lifeline-audience').disabled = true;
     }
 
+    // Function to ensure at least one question set is selected
+function setQuestions(level) {
+    let combinedQuestions = [];
+    if (genericOn) {
+        if (level === 0) {
+            combinedQuestions = combinedQuestions.concat(easyQuestions);
+        } else if (level === 1) {
+            combinedQuestions = combinedQuestions.concat(mediumQuestions);
+        } else {
+            combinedQuestions = combinedQuestions.concat(hardQuestions);
+        }
+    }
+    if (mathOn) {
+        if (level === 0) {
+            combinedQuestions = combinedQuestions.concat(easyMathQuestions);
+        } else if (level === 1) {
+            combinedQuestions = combinedQuestions.concat(mediumMathQuestions);
+        } else {
+            combinedQuestions = combinedQuestions.concat(hardMathQuestions);
+        }
+    }
+
+    // Update shuffledQuestions and display new set
+    return combinedQuestions;
+}
+
+// Toggle Generic Questions
+genericButton.addEventListener("click", () => {
+    genericOn = !genericOn;
+    genericButton.classList.toggle("on");
+});
+
+// Toggle Math Questions
+mathButton.addEventListener("click", () => {
+    mathOn = !mathOn;
+    mathButton.classList.toggle("on");
+    updateQuestionSet();  // Update question set immediately
+});
+
     function settingsScreen() {
         settings.style.visibility = 'visible';
         answer1.disabled = true;
@@ -85,12 +130,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     closeSettingsButton.addEventListener("click", () => {
-        settings.style.visibility = 'hidden';
-        settingsCnt = true;
-        answer1.disabled = false;
-        answer2.disabled = false;
-        answer3.disabled = false;
-        answer4.disabled = false;
+        if (!genericOn && !mathOn) {
+            alert("You must select at least one question set!");
+        } else {
+            settings.style.visibility = 'hidden';
+            settingsCnt = true;
+            answer1.disabled = false;
+            answer2.disabled = false;
+            answer3.disabled = false;
+            answer4.disabled = false;
+        }
     });
 
     function detailsScreen() {
@@ -1207,6 +1256,700 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     ];
 
+    const easyMathQuestions = [
+        {
+            question: "Solve for x: 2x + 3 = 7",
+            answers: ["x = 1", "x = 2", "x = 3", "x = 4"],
+            correct: 1
+        },
+        {
+            question: "What is the value of y if 3y - 5 = 10?",
+            answers: ["y = 2", "y = 3", "y = 5", "y = 7"],
+            correct: 2
+        },
+        {
+            question: "Solve for x: 5x - 4 = 16",
+            answers: ["x = 2", "x = 3", "x = 4", "x = 5"],
+            correct: 2
+        },
+        {
+            question: "What is the slope of the line y = 3x + 4?",
+            answers: ["3", "4", "1", "-3"],
+            correct: 0
+        },
+        {
+            question: "Simplify: 4x + 2x",
+            answers: ["6x", "8x", "4x", "2x"],
+            correct: 0
+        },
+        {
+            question: "Solve for x: 7x - 14 = 0",
+            answers: ["x = 1", "x = 2", "x = 3", "x = 4"],
+            correct: 1
+        },
+        {
+            question: "What is the y-intercept of the line y = -2x + 5?",
+            answers: ["-2", "2", "5", "-5"],
+            correct: 2
+        },
+        {
+            question: "What is the solution to the inequality: 3x + 4 < 10?",
+            answers: ["x < 2", "x < 3", "x > 2", "x > 3"],
+            correct: 0
+        },
+        {
+            question: "Solve for x: x/3 + 2 = 5",
+            answers: ["x = 6", "x = 9", "x = 12", "x = 15"],
+            correct: 1
+        },
+        {
+            question: "Simplify: (2x + 3) + (3x - 5)",
+            answers: ["5x - 2", "5x + 8", "6x - 2", "6x + 8"],
+            correct: 0
+        },
+        {
+            question: "Solve for y: y - 3 = 4",
+            answers: ["y = 1", "y = 5", "y = 7", "y = -1"],
+            correct: 2
+        },
+        {
+            question: "What is the solution to the equation: 4x + 12 = 0?",
+            answers: ["x = -4", "x = 4", "x = -3", "x = 3"],
+            correct: 2
+        },
+        {
+            question: "Simplify: 3(2x - 4)",
+            answers: ["6x - 4", "6x - 12", "6x + 12", "5x - 12"],
+            correct: 1
+        },
+        {
+            question: "What is the value of x if 3x + 9 = 0?",
+            answers: ["x = 3", "x = -3", "x = 0", "x = 9"],
+            correct: 1
+        },
+        {
+            question: "Solve for y: 5y - 10 = 15",
+            answers: ["y = 1", "y = 3", "y = 5", "y = 6"],
+            correct: 2
+        },
+        {
+            question: "What is the slope of the line that passes through (1, 2) and (3, 6)?",
+            answers: ["2", "4", "1", "3"],
+            correct: 0
+        },
+        {
+            question: "What is the solution to the inequality: 2x - 5 > 7?",
+            answers: ["x > 2", "x < 2", "x > 6", "x < 6"],
+            correct: 2
+        },
+        {
+            question: "Simplify: (x^2 + 2x) + (3x^2 - x)",
+            answers: ["4x^2 + x", "x^2 + 3x", "3x^2 + x", "4x^2 - x"],
+            correct: 0
+        },
+        {
+            question: "Solve for x: 6x + 5 = 2x - 7",
+            answers: ["x = -3", "x = -2", "x = 2", "x = 3"],
+            correct: 0
+        },
+        {
+            question: "What is the solution to the equation: 8x - 4 = 20?",
+            answers: ["x = 1", "x = 2", "x = 3", "x = 4"],
+            correct: 2
+        },
+        {
+            question: "Solve for y: y + 4 = 3y - 2",
+            answers: ["y = -2", "y = 2", "y = 3", "y = 1"],
+            correct: 2
+        },
+        {
+            question: "What is the value of x in the equation: x/2 - 1 = 4?",
+            answers: ["x = 4", "x = 6", "x = 10", "x = 8"],
+            correct: 2
+        },
+        {
+            question: "Simplify: 4(2x - 1) + 3x",
+            answers: ["11x - 4", "8x + 3", "11x - 1", "8x - 1"],
+            correct: 0
+        },
+        {
+            question: "What is the solution to the equation: 2(x - 3) = 4?",
+            answers: ["x = 3", "x = 4", "x = 5", "x = 6"],
+            correct: 2
+        },
+        {
+            question: "What is the value of x if 5x - 15 = 10?",
+            answers: ["x = 2", "x = 3", "x = 5", "x = 6"],
+            correct: 2
+        },
+        {
+            question: "Solve for y: 4y + 1 = 2y + 9",
+            answers: ["y = 4", "y = 3", "y = 5", "y = 6"],
+            correct: 0
+        },
+        {
+            question: "Simplify: (2x - 3) + (3x + 5)",
+            answers: ["5x + 2", "5x - 8", "4x + 2", "4x - 8"],
+            correct: 0
+        },
+        {
+            question: "Solve for x: 3(x - 2) = 12",
+            answers: ["x = 6", "x = 5", "x = 4", "x = 3"],
+            correct: 0
+        },
+        {
+            question: "What is the slope of the line y = -3x + 2?",
+            answers: ["-3", "2", "3", "-2"],
+            correct: 0
+        },
+        {
+            question: "Solve for x: 7x + 6 = 34",
+            answers: ["x = 4", "x = 6", "x = 7", "x = 12"],
+            correct: 0
+        },
+        {
+            question: "What is the value of x if 3x - 7 = 14?",
+            answers: ["x = 5", "x = 7", "x = 8", "x = 9"],
+            correct: 1
+        },
+        {
+            question: "Solve for y: 6y + 2 = 20",
+            answers: ["y = 1", "y = 2", "y = 3", "y = 4"],
+            correct: 2
+        },
+        {
+            question: "Simplify: 2x + 3(4 - x)",
+            answers: ["x + 12", "5x + 12", "-x + 12", "2x + 12"],
+            correct: 2
+        },
+        {
+            question: "Solve for x: 4x - 5 = 19",
+            answers: ["x = 6", "x = 7", "x = 8", "x = 9"],
+            correct: 1
+        },
+        {
+            question: "What is the y-intercept of the line y = 5x - 7?",
+            answers: ["5", "-5", "7", "-7"],
+            correct: 3
+        },
+        {
+            question: "Simplify: (x - 1)(x + 1)",
+            answers: ["x^2 - 1", "x^2 + 1", "x^2 - 2", "x^2 + 2"],
+            correct: 0
+        },
+        {
+            question: "Solve for y: 8y - 4 = 12",
+            answers: ["y = 1", "y = 2", "y = 3", "y = 4"],
+            correct: 2
+        },
+        {
+            question: "What is the solution to the inequality: x - 4 > 2?",
+            answers: ["x > 1", "x > 2", "x > 3", "x > 6"],
+            correct: 2
+        },
+        {
+            question: "Simplify: 3(2x - 5) + 4",
+            answers: ["6x + 1", "6x - 11", "6x - 15", "6x - 2"],
+            correct: 1
+        },
+        {
+            question: "What is the value of x if 2x + 8 = 18?",
+            answers: ["x = 3", "x = 4", "x = 5", "x = 6"],
+            correct: 2
+        }
+    ];
+
+    const mediumMathQuestions = [
+        {
+            question: "Solve for x: 2x^2 - 4x - 6 = 0",
+            answers: ["x = 3, x = -1", "x = 2, x = -3", "x = 1, x = -2", "x = 2, x = -1"],
+            correct: 0
+        },
+        {
+            question: "What is the discriminant of the quadratic equation: 3x^2 - 5x + 2 = 0?",
+            answers: ["1", "4", "9", "25"],
+            correct: 1
+        },
+        {
+            question: "Solve for x: log(x) + log(4) = log(32)",
+            answers: ["x = 8", "x = 4", "x = 16", "x = 32"],
+            correct: 0
+        },
+        {
+            question: "What is the solution to the inequality: |x + 2| < 5?",
+            answers: ["-7 < x < 3", "-5 < x < 3", "-3 < x < 3", "-7 < x < 7"],
+            correct: 1
+        },
+        {
+            question: "Simplify: (3x^2 - 2x) - (x^2 + 5x - 6)",
+            answers: ["2x^2 - 7x + 6", "2x^2 - 7x - 6", "2x^2 + 3x + 6", "4x^2 - 3x - 6"],
+            correct: 1
+        },
+        {
+            question: "Solve for x: e^(2x) = 5",
+            answers: ["x = ln(5)/2", "x = ln(5)", "x = 2ln(5)", "x = 5ln(2)"],
+            correct: 0
+        },
+        {
+            question: "What is the value of x in the equation: 3^(2x) = 9?",
+            answers: ["x = 1/2", "x = 2", "x = 3", "x = 1"],
+            correct: 3
+        },
+        {
+            question: "Solve for y: 4e^(2y) = 12",
+            answers: ["y = ln(3)/2", "y = ln(12)/2", "y = ln(3)", "y = 2ln(3)"],
+            correct: 0
+        },
+        {
+            question: "What is the inverse function of f(x) = 3x - 7?",
+            answers: ["f^(-1)(x) = (x + 7)/3", "f^(-1)(x) = (x - 7)/3", "f^(-1)(x) = 3x + 7", "f^(-1)(x) = 3/(x + 7)"],
+            correct: 0
+        },
+        {
+            question: "Solve for x: 4x^2 - 16x = 0",
+            answers: ["x = 0, x = 4", "x = 2, x = -2", "x = 0, x = -4", "x = -4, x = 4"],
+            correct: 0
+        },
+        {
+            question: "Simplify: (4x + 5)/(x^2 - 1) ÷ (2x - 1)/(x + 1)",
+            answers: ["(2x + 5)/(x - 1)", "(8x + 5)/(x - 1)", "(2x + 5)/(x^2 - 1)", "(8x - 5)/(x + 1)"],
+            correct: 0
+        },
+        {
+            question: "Find the vertex of the parabola: y = 2x^2 - 8x + 6",
+            answers: ["(2, -2)", "(2, 2)", "(3, -4)", "(4, 3)"],
+            correct: 1
+        },
+        {
+            question: "Solve for x: |3x - 1| = 8",
+            answers: ["x = 3, x = -3", "x = 3, x = -7/3", "x = 7/3, x = -3", "x = 4, x = -4"],
+            correct: 2
+        },
+        {
+            question: "What is the domain of the function f(x) = sqrt(2x - 4)?",
+            answers: ["x ≥ 4", "x ≥ 2", "x ≥ -2", "x ≥ 1"],
+            correct: 1
+        },
+        {
+            question: "Solve for x: 2x^2 + 3x - 5 = 0",
+            answers: ["x = 1, x = -5/2", "x = 5/2, x = -1", "x = -1, x = 5/2", "x = 1, x = 5/2"],
+            correct: 2
+        },
+        {
+            question: "Simplify: (x^2 + 2x - 3)/(x - 1)",
+            answers: ["x + 3", "x + 2", "x + 1", "x - 3"],
+            correct: 0
+        },
+        {
+            question: "What is the equation of the asymptote for the function: y = 1/(x - 2)?",
+            answers: ["x = 0", "x = 2", "y = 0", "y = 2"],
+            correct: 1
+        },
+        {
+            question: "Solve for x: ln(x - 1) = 3",
+            answers: ["x = 2", "x = e^3", "x = e + 1", "x = e^3 + 1"],
+            correct: 3
+        },
+        {
+            question: "What is the y-intercept of the function: y = log(x - 2)?",
+            answers: ["2", "log(2)", "log(1)", "undefined"],
+            correct: 3
+        },
+        {
+            question: "Find the solution to the system of equations: x + y = 5 and x - y = 1",
+            answers: ["x = 3, y = 2", "x = 2, y = 3", "x = 4, y = 1", "x = 1, y = 4"],
+            correct: 0
+        },
+        {
+            question: "What is the domain of the function: f(x) = 1/(x^2 - 9)?",
+            answers: ["x ≠ 0", "x ≠ 9", "x ≠ 3, x ≠ -3", "x ≥ 0"],
+            correct: 2
+        },
+        {
+            question: "Simplify: log(100) - log(10)",
+            answers: ["0", "1", "2", "3"],
+            correct: 1
+        },
+        {
+            question: "Solve for x: 4^x = 64",
+            answers: ["x = 3", "x = 4", "x = 5", "x = 2"],
+            correct: 0
+        },
+        {
+            question: "Solve for x: (2x + 3)^2 = 16",
+            answers: ["x = 1, x = -7/2", "x = 1, x = -1", "x = 3, x = 1", "x = 2, x = 1"],
+            correct: 0
+        },
+        {
+            question: "Simplify: log(2x) + log(5)",
+            answers: ["log(10x)", "log(2x + 5)", "log(7x)", "log(2x5)"],
+            correct: 0
+        },
+        {
+            question: "Solve for x: e^(x-2) = 7",
+            answers: ["x = 2ln(7)", "x = ln(7) + 2", "x = ln(7) - 2", "x = 2ln(7) - 2"],
+            correct: 1
+        },
+        {
+            question: "Solve the system of equations: 2x + 3y = 5 and 4x - y = 11",
+            answers: ["x = 3, y = -1", "x = 1, y = 3", "x = 3, y = 1", "x = 1, y = -3"],
+            correct: 0
+        },
+        {
+            question: "What is the solution to the inequality: 2x - 3 > 7?",
+            answers: ["x > 5", "x < 5", "x > 4", "x < 4"],
+            correct: 0
+        },
+        {
+            question: "Simplify: (x^2 - 9)/(x + 3)",
+            answers: ["x + 3", "x - 3", "x + 2", "x - 2"],
+            correct: 1
+        },
+        {
+            question: "Solve for x: log(x^2 - 4) = 0",
+            answers: ["x = 2", "x = 3", "x = 4", "x = ±3"],
+            correct: 0
+        },
+        {
+            question: "Simplify: (2x^2 - x)/(4x^2 - 9)",
+            answers: ["(x)/(2x + 3)", "(2x)/(2x + 3)", "(x)/(x + 3)", "(2x - 1)/(2x + 3)"],
+            correct: 3
+        },
+        {
+            question: "Solve for x: log(2x) = 3",
+            answers: ["x = 100", "x = 200", "x = 500", "x = 1000"],
+            correct: 1
+        },
+        {
+            question: "Find the solution to the system of equations: 3x + 4y = 7 and 2x - y = 5",
+            answers: ["x = 3, y = -1", "x = 1, y = 3", "x = 2, y = 1", "x = 1, y = 2"],
+            correct: 2
+        },
+        {
+            question: "Solve for x: log(2x + 1) = log(x + 3)",
+            answers: ["x = 1", "x = 2", "x = 3", "x = 4"],
+            correct: 0
+        },
+        {
+            question: "What is the range of the function: y = 2x^2 - 3?",
+            answers: ["y ≥ -3", "y ≥ 3", "y ≤ -3", "y ≤ 3"],
+            correct: 0
+        },
+        {
+            question: "Simplify: 4(x + 2) - (2x - 3)",
+            answers: ["2x + 11", "2x + 13", "4x + 13", "6x - 1"],
+            correct: 2
+        },
+        {
+            question: "Solve for x: (x + 2)/(x - 3) = 1",
+            answers: ["x = 1", "x = 3", "x = 5", "x = -5"],
+            correct: 3
+        },
+        {
+            question: "What is the vertical asymptote of the function: y = 1/(x + 2)?",
+            answers: ["x = -2", "x = 0", "x = 2", "x = -1"],
+            correct: 0
+        },
+        {
+            question: "Solve for x: log(x + 4) - log(x) = 1",
+            answers: ["x = 5", "x = 6", "x = 7", "x = 8"],
+            correct: 1
+        },
+        {
+            question: "What is the solution to the equation: 2x^2 + 5x - 3 = 0?",
+            answers: ["x = 1, x = -3/2", "x = -1, x = 3/2", "x = 3/2, x = -1", "x = 2, x = -3/2"],
+            correct: 2
+        },
+        {
+            question: "Solve for x: 5^(2x) = 125",
+            answers: ["x = 3", "x = 2", "x = 5", "x = 1"],
+            correct: 1
+        },
+        {
+            question: "Simplify: log(2x) - log(5)",
+            answers: ["log(10/x)", "log(x/5)", "log(5x)", "log(2x - 5)"],
+            correct: 1
+        },
+        {
+            question: "What is the inverse of the function: f(x) = x/(x + 2)?",
+            answers: ["f^(-1)(x) = (2x)/(x - 1)", "f^(-1)(x) = (2x - 1)/(x)", "f^(-1)(x) = (x)/(2x - 1)", "f^(-1)(x) = (x - 2)/(x + 1)"],
+            correct: 0
+        }
+    ];
+
+    const hardMathQuestions = [
+        {
+            question: "Differentiate: f(x) = 3x^2 + 5x",
+            answers: ["f'(x) = 6x + 5", "f'(x) = 6x - 5", "f'(x) = 3x + 5", "f'(x) = 3x^2"],
+            correct: 0
+        },
+        {
+            question: "What is the integral of f(x) = 2x?",
+            answers: ["x^2 + C", "2x^2 + C", "x + C", "4x + C"],
+            correct: 0
+        },
+        {
+            question: "Find the derivative of f(x) = sin(x)",
+            answers: ["cos(x)", "-cos(x)", "sin(x)", "-sin(x)"],
+            correct: 0
+        },
+        {
+            question: "What is the integral of f(x) = 1/x?",
+            answers: ["ln(x) + C", "1/x + C", "x^2/2 + C", "e^x + C"],
+            correct: 0
+        },
+        {
+            question: "Find the derivative of f(x) = e^x",
+            answers: ["e^x", "e^x + C", "x * e^x", "1"],
+            correct: 0
+        },
+        {
+            question: "Evaluate: lim(x → ∞) (1/x)",
+            answers: ["0", "∞", "1", "-∞"],
+            correct: 0
+        },
+        {
+            question: "What is the derivative of f(x) = ln(x)?",
+            answers: ["1/x", "ln(x)", "x", "1"],
+            correct: 0
+        },
+        {
+            question: "What is the derivative of f(x) = cos(x)?",
+            answers: ["-sin(x)", "sin(x)", "-cos(x)", "cos(x)"],
+            correct: 0
+        },
+        {
+            question: "Find the critical points of f(x) = x^2 - 4x",
+            answers: ["x = 0, x = 4", "x = 2", "x = -2, x = 2", "x = 1, x = 3"],
+            correct: 1
+        },
+        {
+            question: "What is the integral of f(x) = 2x + 1?",
+            answers: ["x^2 + x + C", "2x + C", "2x^2 + C", "x^2 + 2x + C"],
+            correct: 0
+        },
+        {
+            question: "Evaluate: lim(x → 0) (sin(x)/x)",
+            answers: ["1", "0", "∞", "-1"],
+            correct: 0
+        },
+        {
+            question: "Find the derivative of f(x) = x^3 - 5x^2 + 3x - 2",
+            answers: ["3x^2 - 10x + 3", "3x^2 - 5x + 3", "2x^2 - 10x + 3", "x^2 - 10x + 3"],
+            correct: 0
+        },
+        {
+            question: "Evaluate: ∫ (4x^3) dx",
+            answers: ["x^4 + C", "x^3 + C", "x^4", "4x^4 + C"],
+            correct: 0
+        },
+        {
+            question: "Find the derivative of f(x) = ln(2x)",
+            answers: ["1/x", "2/x", "1/2x", "2ln(x)"],
+            correct: 1
+        },
+        {
+            question: "Find the slope of the tangent line to the curve y = x^2 - 3x + 2 at x = 1",
+            answers: ["-1", "1", "0", "2"],
+            correct: 2
+        },
+        {
+            question: "Evaluate: lim(x → 0) (1/x^2)",
+            answers: ["∞", "-∞", "0", "1"],
+            correct: 0
+        },
+        {
+            question: "Find the derivative of f(x) = 5e^(3x)",
+            answers: ["15e^(3x)", "3e^(3x)", "5e^(x)", "e^(3x)"],
+            correct: 0
+        },
+        {
+            question: "Find the second derivative of f(x) = x^3 - 6x^2 + 9x",
+            answers: ["6x - 12", "6x", "3x^2 - 12x", "2x - 12"],
+            correct: 0
+        },
+        {
+            question: "Evaluate: ∫ (x^2 - 3x + 4) dx",
+            answers: ["(x^3)/3 - (3x^2)/2 + 4x + C", "(x^3)/3 - (3x^2)/2 + C", "x^3 + 3x + 4 + C", "(x^2)/3 - 3x + 4 + C"],
+            correct: 0
+        },
+        {
+            question: "Evaluate: lim(x → ∞) (e^x/x^2)",
+            answers: ["∞", "0", "1", "-∞"],
+            correct: 0
+        },
+        {
+            question: "What is the derivative of f(x) = tan(x)?",
+            answers: ["sec^2(x)", "cos^2(x)", "sin^2(x)", "-sec^2(x)"],
+            correct: 0
+        },
+        {
+            question: "Find the critical points of f(x) = x^3 - 9x^2 + 27x",
+            answers: ["x = 3, x = 0", "x = 9, x = 0", "x = 3, x = -3", "x = 0, x = -9"],
+            correct: 0
+        },
+        {
+            question: "Find the maximum value of f(x) = -x^2 + 4x + 1",
+            answers: ["5", "4", "3", "2"],
+            correct: 0
+        },
+        {
+            question: "Evaluate: lim(x → 0) (x^2/e^x)",
+            answers: ["0", "∞", "1", "-∞"],
+            correct: 0
+        },
+        {
+            question: "Find the derivative of f(x) = 7x^4 + 3x^2",
+            answers: ["28x^3 + 6x", "7x^3 + 3x", "28x^3", "4x^3 + 6x"],
+            correct: 0
+        },
+        {
+            question: "Find the integral of f(x) = cos(x)",
+            answers: ["sin(x) + C", "-cos(x) + C", "cos(x) + C", "-sin(x) + C"],
+            correct: 3
+        },
+        {
+            question: "Evaluate: lim(x → ∞) (x/(x+1))",
+            answers: ["1", "0", "∞", "-∞"],
+            correct: 0
+        },
+        {
+            question: "Find the derivative of f(x) = ln(3x^2)",
+            answers: ["2/x", "2/3x", "2/x^2", "6x"],
+            correct: 0
+        },
+        {
+            question: "Evaluate: lim(x → 0) (e^x - 1)/x",
+            answers: ["1", "0", "∞", "-∞"],
+            correct: 0
+        },
+        {
+            question: "Find the derivative of f(x) = x^3 ln(x)",
+            answers: ["x^2(3ln(x) + 1)", "x^2(3x ln(x))", "ln(x)", "x^3"],
+            correct: 0
+        },
+        {
+            question: "Find the derivative of f(x) = x^2 * e^x",
+            answers: ["2x * e^x + x^2 * e^x", "x^2 * e^x", "2x * e^x", "e^x"],
+            correct: 0
+        },
+        {
+            question: "Evaluate: ∫ (sec^2(x)) dx",
+            answers: ["tan(x) + C", "-tan(x) + C", "sec(x) + C", "sin(x) + C"],
+            correct: 0
+        },
+        {
+            question: "Find the derivative of f(x) = arctan(x)",
+            answers: ["1/(1 + x^2)", "1/(x^2)", "arctan(x)", "-1/(1 + x^2)"],
+            correct: 0
+        },
+        {
+            question: "Evaluate: lim(x → 0) (x^3/sin(x))",
+            answers: ["0", "∞", "1", "-∞"],
+            correct: 0
+        },
+        {
+            question: "Find the second derivative of f(x) = e^(2x)",
+            answers: ["4e^(2x)", "e^(2x)", "2e^(2x)", "e^x"],
+            correct: 0
+        },
+        {
+            question: "Evaluate: lim(x → ∞) (x/sqrt(x^2 + 1))",
+            answers: ["1", "0", "∞", "-∞"],
+            correct: 0
+        },
+        {
+            question: "Find the integral of f(x) = e^(2x)",
+            answers: ["(e^(2x))/2 + C", "e^(2x) + C", "e^(x) + C", "2e^(2x) + C"],
+            correct: 0
+        },
+        {
+            question: "Evaluate: ∫ (2x * e^x) dx",
+            answers: ["(2x - 2)e^x + C", "2xe^x + C", "(2x + 2)e^x + C", "x * e^x + C"],
+            correct: 0
+        },
+        {
+            question: "Find the derivative of f(x) = ln(x)/x",
+            answers: ["1/x^2 - ln(x)/x^2", "1/x - 1/x^2", "ln(x)/x", "1/x^2"],
+            correct: 0
+        },
+        {
+            question: "Find the limit: lim(x → 1) (x^2 - 1)/(x - 1)",
+            answers: ["2", "1", "0", "∞"],
+            correct: 0
+        },
+        {
+            question: "Evaluate: lim(x → ∞) (x/(x + 2))",
+            answers: ["1", "0", "∞", "2"],
+            correct: 0
+        },
+        {
+            question: "Find the derivative of f(x) = 1/x^3",
+            answers: ["-3/x^4", "3/x^4", "-1/x^3", "2/x^3"],
+            correct: 0
+        },
+        {
+            question: "Evaluate: lim(x → 0) (cos(x) - 1)/x^2",
+            answers: ["-1/2", "0", "∞", "1"],
+            correct: 0
+        },
+        {
+            question: "Evaluate: lim(x → 0) (sin(3x)/x)",
+            answers: ["3", "0", "∞", "1"],
+            correct: 0
+        },
+        {
+            question: "Find the second derivative of f(x) = x^3 + 3x^2 - 2x",
+            answers: ["6x + 6", "6x", "3x + 3", "x^2"],
+            correct: 0
+        },
+        {
+            question: "Find the critical points of f(x) = x^4 - 4x^3 + 6x^2",
+            answers: ["x = 2", "x = 1", "x = 3", "x = 0"],
+            correct: 3
+        },
+        {
+            question: "Evaluate: ∫ (x^2 + 2x + 1) dx",
+            answers: ["(x^3)/3 + x^2 + x + C", "(x^3)/3 + 2x^2 + 2x + C", "(x^2)/3 + 2x + C", "x^2 + 2x + 1 + C"],
+            correct: 0
+        },
+        {
+            question: "Find the derivative of f(x) = arccos(x)",
+            answers: ["-1/sqrt(1 - x^2)", "1/sqrt(1 - x^2)", "arccos(x)", "sin(x)"],
+            correct: 0
+        },
+        {
+            question: "Find the integral of f(x) = e^(2x + 1)",
+            answers: ["e^(2x + 1)/2 + C", "2e^(2x + 1) + C", "e^(2x) + C", "(2x + 1) + C"],
+            correct: 0
+        },
+        {
+            question: "Evaluate: lim(x → 0) (x * ln(x))",
+            answers: ["0", "∞", "-∞", "1"],
+            correct: 2
+        },
+        {
+            question: "Find the second derivative of f(x) = ln(x)",
+            answers: ["-1/x^2", "1/x^2", "1/x", "-ln(x)"],
+            correct: 0
+        },
+        {
+            question: "Evaluate: ∫ (sec(x) * tan(x)) dx",
+            answers: ["sec(x) + C", "tan(x) + C", "cos(x) + C", "-sec(x) + C"],
+            correct: 0
+        },
+        {
+            question: "Evaluate: lim(x → ∞) (e^x/x^x)",
+            answers: ["0", "1", "∞", "-∞"],
+            correct: 0
+        },
+        {
+            question: "Find the critical points of f(x) = x^3 - 3x",
+            answers: ["x = -1, x = 1", "x = 0, x = -2", "x = 0, x = 2", "x = -2, x = 2"],
+            correct: 0
+        }
+    ];
+
     answer1.addEventListener("click", () => {
         if (startCnt) {
             startGame();
@@ -1243,7 +1986,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function startGame() {
         resetMoneyLadder();
         resetLifelines();
-        shuffledQuestions = shuffleQuestions(easyQuestions);
+        shuffledQuestions = shuffleQuestions(setQuestions(0));
         currentQuestion = 0;
         currentLevel = 0;
         moneyValues[0].classList.add("active");
@@ -1256,10 +1999,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateQuestion() {
         resetOptions();
         if (currentLevel === 5) {
-            shuffledQuestions = shuffleQuestions(mediumQuestions);
+            shuffledQuestions = shuffleQuestions(setQuestions(1));
         }
         if (currentLevel === 10) {
-            shuffledQuestions = shuffleQuestions(hardQuestions);
+            shuffledQuestions = shuffleQuestions(setQuestions(2));
         }
         const current = shuffledQuestions[currentQuestion];
         questionElement.textContent = current.question;

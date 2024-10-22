@@ -191,6 +191,27 @@ main {
     height: 100%;
     overflow: auto;
     text-align: center;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Add space between buttons */
+    margin-top: 20px; /* Optional margin to push buttons down */
+}
+
+.settings-button {
+    background-color: #f44336; /* Style similar to close button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 20%; /* Set a uniform width for all buttons */
 }
 
 .popup-p {
@@ -215,4 +236,9 @@ main {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 100px;
+}
+
+.settings-button.on {
+    background-color: green;
 }
