@@ -242,3 +242,114 @@ main {
 .settings-button.on {
     background-color: green;
 }
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 5px #0f0;
+    }
+    to {
+        box-shadow: 0 0 20px #0f0;
+    }
+}
+
+.answer.correct {
+    animation: glow 1s infinite alternate;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+.answer.incorrect {
+    animation: shake 0.5s;
+}
+
+.lifeline.used {
+    opacity: 0.5;
+    transition: opacity 0.5s ease-out;
+}
+
+@keyframes pulse {
+    0% { background-color: #f1c40f; }
+    50% { background-color: #ffe680; }
+    100% { background-color: #f1c40f; }
+}
+
+.money.active {
+    animation: pulse 1s infinite;
+}
+
+@keyframes backgroundAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+body {
+    background: linear-gradient(-45deg, #1c1c1c, #282828, #1c1c1c, #282828);
+    background-size: 400% 400%;
+    animation: backgroundAnimation 15s ease infinite;
+}
+
+.answer, .lifeline {
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.answer:hover {
+    transform: scale(1.02);
+    background-color: #36a5ef;
+}
+
+.answer.correct:hover {
+    background-color: #009f0b;
+}
+
+.answer.incorrect:hover {
+    background-color: #f44336;
+}
+
+.lifeline:hover {
+    transform: scale(1.02);
+    background-color: #e99a07f3;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#question {
+    animation: fadeIn 0.5s;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.overlay.show {
+    display: flex;
+}
+
+#restartButtonVictory, #restartButtonGameOver {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 20%;
+}

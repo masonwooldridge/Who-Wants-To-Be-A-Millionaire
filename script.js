@@ -178,6 +178,8 @@ mathButton.addEventListener("click", () => {
 
 
     function use5050() {
+        const lifelineButton = document.getElementById('lifeline-5050');
+        lifelineButton.classList.add('used');
         const currentQuestionObj = shuffledQuestions[currentQuestion];
         const correctAnswer = currentQuestionObj.correct;
         let otherCnt = 0;
@@ -202,12 +204,16 @@ mathButton.addEventListener("click", () => {
     }
     
     function usePhoneAFriend() {
+        const lifelineButton = document.getElementById('lifeline-phone');
+        lifelineButton.classList.add('used');
         alert("Your friend thinks the correct answer is: " + shuffledQuestions[currentQuestion].answers[shuffledQuestions[currentQuestion].correct]);
         document.getElementById('lifeline-phone').style.visibility = 'hidden';
         document.getElementById('lifeline-phone').disabled = true;
     }
     
     function useAskTheAudience() {
+        const lifelineButton = document.getElementById('lifeline-audience');
+        lifelineButton.classList.add('used');
         let audienceVotes = [0, 0, 0, 0];
         const correctIndex = shuffledQuestions[currentQuestion].correct;
     
@@ -1425,7 +1431,7 @@ mathButton.addEventListener("click", () => {
         {
             question: "Solve for x: 4x - 5 = 19",
             answers: ["x = 6", "x = 7", "x = 8", "x = 9"],
-            correct: 1
+            correct: 0
         },
         {
             question: "What is the y-intercept of the line y = 5x - 7?",
@@ -1440,12 +1446,12 @@ mathButton.addEventListener("click", () => {
         {
             question: "Solve for y: 8y - 4 = 12",
             answers: ["y = 1", "y = 2", "y = 3", "y = 4"],
-            correct: 2
+            correct: 1
         },
         {
             question: "What is the solution to the inequality: x - 4 > 2?",
             answers: ["x > 1", "x > 2", "x > 3", "x > 6"],
-            correct: 2
+            correct: 3
         },
         {
             question: "Simplify: 3(2x - 5) + 4",
@@ -1468,7 +1474,7 @@ mathButton.addEventListener("click", () => {
         {
             question: "What is the discriminant of the quadratic equation: 3x^2 - 5x + 2 = 0?",
             answers: ["1", "4", "9", "25"],
-            correct: 1
+            correct: 0
         },
         {
             question: "Solve for x: log(x) + log(4) = log(32)",
@@ -1628,7 +1634,7 @@ mathButton.addEventListener("click", () => {
         {
             question: "Solve for x: log(2x + 1) = log(x + 3)",
             answers: ["x = 1", "x = 2", "x = 3", "x = 4"],
-            correct: 0
+            correct: 1
         },
         {
             question: "What is the range of the function: y = 2x^2 - 3?",
@@ -1638,7 +1644,7 @@ mathButton.addEventListener("click", () => {
         {
             question: "Simplify: 4(x + 2) - (2x - 3)",
             answers: ["2x + 11", "2x + 13", "4x + 13", "6x - 1"],
-            correct: 2
+            correct: 0
         },
         {
             question: "Solve for x: (x + 2)/(x - 3) = 1",
@@ -1657,13 +1663,13 @@ mathButton.addEventListener("click", () => {
         },
         {
             question: "What is the solution to the equation: 2x^2 + 5x - 3 = 0?",
-            answers: ["x = 1, x = -3/2", "x = -1, x = 3/2", "x = 3/2, x = -1", "x = 2, x = -3/2"],
-            correct: 2
+            answers: ["x = 1, x = -1/2", "x = -3, x = 1/2", "x = 3/2, x = -3", "x = 3, x = -3/2"],
+            correct: 1
         },
         {
             question: "Solve for x: 5^(2x) = 125",
-            answers: ["x = 3", "x = 2", "x = 5", "x = 1"],
-            correct: 1
+            answers: ["x = 3", "x = 2", "x = 3/2", "x = 1"],
+            correct: 2
         },
         {
             question: "Simplify: log(2x) - log(5)",
@@ -1719,11 +1725,6 @@ mathButton.addEventListener("click", () => {
             correct: 0
         },
         {
-            question: "Find the critical points of f(x) = x^2 - 4x",
-            answers: ["x = 0, x = 4", "x = 2", "x = -2, x = 2", "x = 1, x = 3"],
-            correct: 1
-        },
-        {
             question: "What is the integral of f(x) = 2x + 1?",
             answers: ["x^2 + x + C", "2x + C", "2x^2 + C", "x^2 + 2x + C"],
             correct: 0
@@ -1746,7 +1747,7 @@ mathButton.addEventListener("click", () => {
         {
             question: "Find the derivative of f(x) = ln(2x)",
             answers: ["1/x", "2/x", "1/2x", "2ln(x)"],
-            correct: 1
+            correct: 0
         },
         {
             question: "Find the slope of the tangent line to the curve y = x^2 - 3x + 2 at x = 1",
@@ -2013,7 +2014,7 @@ mathButton.addEventListener("click", () => {
     }
 
     function checkAnswer(index) {
-        
+        disableButtons();
             const correctIndex = shuffledQuestions[currentQuestion].correct;
             if (index === correctIndex) {
                 answerButtons[correctIndex].classList.add("correct");
@@ -2027,21 +2028,69 @@ mathButton.addEventListener("click", () => {
                     moneyValues[currentLevel].classList.add("active");
                     setTimeout(() => {
                         updateQuestion();
+                        resetButtons();
                     }, 2000);
                 } else {
-                    alert("Congratulations! You've won $1,000,000!");
-                    startScreen();
-                    resetLifelines();
+                    launchConfetti();
+                    const victoryScreen = document.getElementById('victory-screen');
+                    victoryScreen.classList.add('show');
+                    document.getElementById('restartButtonVictory').addEventListener('click', () => {
+                        victoryScreen.classList.remove('show');
+                        startScreen();
+                    });
                 }
             } else {
                 answerButtons[index].classList.add("incorrect");
-                alert("Wrong answer! Game over.");
                 setTimeout(() => {
+                    showGameOverScreen();
                     resetLifelines();
-                    startScreen();
                 }, 2000);
                 
             }
         
+    }
+
+    function disableButtons() {
+        answerButtons.forEach(button => {
+            button.disabled = true;
+        });
+    }
+    
+    function resetButtons() {
+        answerButtons.forEach(button => {
+            button.disabled = false;
+            button.classList.remove('correct', 'incorrect');
+        });
+    }
+
+    function launchConfetti() {
+        var duration = 5 * 1000;
+        var animationEnd = Date.now() + duration;
+        var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
+    
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+    
+        var interval = setInterval(function() {
+            var timeLeft = animationEnd - Date.now();
+    
+            if (timeLeft <= 0) {
+                return clearInterval(interval);
+            }
+    
+            var particleCount = 50 * (timeLeft / duration);
+            // since particles fall down, start a bit higher than random
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0, 1), y: Math.random() - 0.2 } }));
+        }, 250);
+    }
+
+    function showGameOverScreen() {
+        const gameOverScreen = document.getElementById('game-over');
+        gameOverScreen.classList.add('show');
+        document.getElementById('restartButtonGameOver').addEventListener('click', () => {
+            gameOverScreen.classList.remove('show');
+            startScreen();
+        });
     }
 });
